@@ -2,23 +2,25 @@ package ru.practicum.shareit.item.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-/**
- * TODO Sprint add-controllers.
- */
 
 public class ItemDto {
     private Long id;
+
+    @NotBlank(message = "Название не может быть пустым")
     private String name;
+
+    @NotBlank(message = "Описание не может быть пустым")
     private String description;
+
+    @NotNull(message = "Статус доступности должен быть указан")
     private Boolean available;
+
     private Long owner;
     private Long request;
 
-    // Пустой конструктор
     public ItemDto() {
     }
 
-    // Конструктор со всеми полями
     public ItemDto(Long id, String name, String description, Boolean available, Long owner, Long request) {
         this.id = id;
         this.name = name;
@@ -28,7 +30,6 @@ public class ItemDto {
         this.request = request;
     }
 
-    // Геттеры и сеттеры
     public Long getId() {
         return id;
     }
@@ -37,7 +38,6 @@ public class ItemDto {
         this.id = id;
     }
 
-    @NotBlank(message = "Название не может быть пустым")
     public String getName() {
         return name;
     }
@@ -46,7 +46,6 @@ public class ItemDto {
         this.name = name;
     }
 
-    @NotBlank(message = "Описание не может быть пустым")
     public String getDescription() {
         return description;
     }
@@ -55,7 +54,6 @@ public class ItemDto {
         this.description = description;
     }
 
-    @NotNull(message = "Статус доступности должен быть указан")
     public Boolean getAvailable() {
         return available;
     }

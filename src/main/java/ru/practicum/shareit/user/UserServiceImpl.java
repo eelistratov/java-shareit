@@ -1,6 +1,7 @@
 package ru.practicum.shareit.user;
 
 import org.springframework.stereotype.Service;
+import ru.practicum.shareit.exception.BadRequestException;
 import ru.practicum.shareit.exception.ConflictException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.user.dto.UserDto;
@@ -12,13 +13,15 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
-    // Конструктор для внедрения зависимости
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
     public UserDto create(UserDto userDto) {
+        if (userDto.getEmail() == null) {
+            throw new BadRequestException("Email не может быть пустым");
+        }
         if (userRepository.existsByEmail(userDto.getEmail())) {
             throw new ConflictException("Пользователь с email " + userDto.getEmail() + " уже существует");
         }

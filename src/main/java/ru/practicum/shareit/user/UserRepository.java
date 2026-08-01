@@ -43,12 +43,18 @@ public class UserRepository {
     }
 
     public boolean existsByEmail(String email) {
+        if (email == null) {
+            return false;
+        }
         return users.values().stream()
-                .anyMatch(user -> user.getEmail().equals(email));
+                .anyMatch(user -> email.equals(user.getEmail()));
     }
 
     public boolean existsByEmailAndIdNot(String email, Long id) {
+        if (email == null) {
+            return false;
+        }
         return users.values().stream()
-                .anyMatch(user -> user.getEmail().equals(email) && !user.getId().equals(id));
+                .anyMatch(user -> email.equals(user.getEmail()) && !user.getId().equals(id));
     }
 }

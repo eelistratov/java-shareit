@@ -5,21 +5,23 @@ import jakarta.validation.constraints.NotBlank;
 
 public class UserDto {
     private Long id;
+
+    @NotBlank(message = "Имя не может быть пустым")
     private String name;
+
+    @NotBlank(message = "Email не может быть пустым")
+    @Email(message = "Некорректный формат email")
     private String email;
 
-    // Пустой конструктор
     public UserDto() {
     }
 
-    // Конструктор со всеми полями
     public UserDto(Long id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
     }
 
-    // Геттеры и сеттеры
     public Long getId() {
         return id;
     }
@@ -28,7 +30,6 @@ public class UserDto {
         this.id = id;
     }
 
-    @NotBlank(message = "Имя не может быть пустым")
     public String getName() {
         return name;
     }
@@ -37,8 +38,6 @@ public class UserDto {
         this.name = name;
     }
 
-    @NotBlank(message = "Email не может быть пустым")
-    @Email(message = "Некорректный формат email")
     public String getEmail() {
         return email;
     }
