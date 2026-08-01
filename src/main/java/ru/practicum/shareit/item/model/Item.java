@@ -1,7 +1,4 @@
 package ru.practicum.shareit.item.model;
-/**
- * TODO Sprint add-controllers.
- */
 
 public class Item {
     private Long id;
@@ -10,6 +7,7 @@ public class Item {
     private Boolean available;
     private Long owner;
     private Long request;
+
     public Item() {
     }
 
