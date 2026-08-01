@@ -5,7 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.practicum.shareit.exception.NotFoundException;
-import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.item.dto.ItemDto;  // ← ДОБАВИТЬ ИМПОРТ!
+import ru.practicum.shareit.item.model.Item;  // ← ДОБАВИТЬ ИМПОРТ!
 import ru.practicum.shareit.user.UserRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
