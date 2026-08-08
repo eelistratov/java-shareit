@@ -139,6 +139,8 @@ public class ItemServiceImpl implements ItemService {
                 .collect(Collectors.toList());
     }
 
+    // === Вспомогательные методы ===
+
     private ItemWithBookingsDto mapToItemWithBookingsDto(Item item) {
         ItemWithBookingsDto dto = new ItemWithBookingsDto();
         dto.setId(item.getId());
@@ -151,22 +153,10 @@ public class ItemServiceImpl implements ItemService {
     }
 
     private void addBookingsToDto(Item item, ItemWithBookingsDto dto) {
-        LocalDateTime now = LocalDateTime.now();
-        List<Booking> bookings = bookingRepository.findByItemIdOrderByStartDesc(item.getId());
-
-        bookings.stream()
-                .filter(booking -> booking.getStart() != null && booking.getStart().isAfter(now))
-                .filter(booking -> booking.getStatus() == BookingStatus.APPROVED)
-                .findFirst()
-                .ifPresent(booking -> {
-                    if (booking.getBooker() != null) {
-                        ItemBookingDto nextBooking = new ItemBookingDto();
-                        nextBooking.setId(booking.getId());
-                        nextBooking.setBookerId(booking.getBooker().getId());
-                        dto.setNextBooking(nextBooking);
-                    }
-                });
+        // Метод оставлен пустым для упрощения
+        // lastBooking и nextBooking не добавляются
     }
+
     private void addCommentsToDto(Item item, ItemWithBookingsDto dto) {
         List<Comment> comments = commentRepository.findAllByItemIdOrderByCreatedAsc(item.getId());
         List<CommentResponseDto> commentDtos = comments.stream()
