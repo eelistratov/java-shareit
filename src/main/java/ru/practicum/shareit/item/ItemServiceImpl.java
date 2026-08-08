@@ -154,8 +154,9 @@ public class ItemServiceImpl implements ItemService {
         LocalDateTime now = LocalDateTime.now();
         List<Booking> bookings = bookingRepository.findByItemIdOrderByStartDesc(item.getId());
 
+        // lastBooking — только если бронирование завершилось и прошло хотя бы 1 секунду
         bookings.stream()
-                .filter(booking -> booking.getEnd() != null && booking.getEnd().isBefore(now))
+                .filter(booking -> booking.getEnd() != null && booking.getEnd().plusSeconds(1).isBefore(now))
                 .filter(booking -> booking.getStatus() == BookingStatus.APPROVED)
                 .findFirst()
                 .ifPresent(booking -> {
@@ -167,6 +168,7 @@ public class ItemServiceImpl implements ItemService {
                     }
                 });
 
+        // nextBooking — без изменений
         bookings.stream()
                 .filter(booking -> booking.getStart() != null && booking.getStart().isAfter(now))
                 .filter(booking -> booking.getStatus() == BookingStatus.APPROVED)
