@@ -154,21 +154,6 @@ public class ItemServiceImpl implements ItemService {
         LocalDateTime now = LocalDateTime.now();
         List<Booking> bookings = bookingRepository.findByItemIdOrderByStartDesc(item.getId());
 
-        // lastBooking — только если бронирование завершилось и прошло хотя бы 1 секунду
-        bookings.stream()
-                .filter(booking -> booking.getEnd() != null && booking.getEnd().plusSeconds(1).isBefore(now))
-                .filter(booking -> booking.getStatus() == BookingStatus.APPROVED)
-                .findFirst()
-                .ifPresent(booking -> {
-                    if (booking.getBooker() != null) {
-                        ItemBookingDto lastBooking = new ItemBookingDto();
-                        lastBooking.setId(booking.getId());
-                        lastBooking.setBookerId(booking.getBooker().getId());
-                        dto.setLastBooking(lastBooking);
-                    }
-                });
-
-        // nextBooking — без изменений
         bookings.stream()
                 .filter(booking -> booking.getStart() != null && booking.getStart().isAfter(now))
                 .filter(booking -> booking.getStatus() == BookingStatus.APPROVED)
@@ -182,7 +167,6 @@ public class ItemServiceImpl implements ItemService {
                     }
                 });
     }
-
     private void addCommentsToDto(Item item, ItemWithBookingsDto dto) {
         List<Comment> comments = commentRepository.findAllByItemIdOrderByCreatedAsc(item.getId());
         List<CommentResponseDto> commentDtos = comments.stream()
