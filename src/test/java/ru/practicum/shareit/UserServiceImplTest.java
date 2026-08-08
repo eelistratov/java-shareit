@@ -1,25 +1,28 @@
 package ru.practicum.shareit.user;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import ru.practicum.shareit.exception.NotFoundException;
-import ru.practicum.shareit.user.dto.UserDto;  // ← ДОБАВИТЬ ИМПОРТ!
+import ru.practicum.shareit.user.dto.UserDto;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
 
-    @MockBean
+    @Mock
     private UserRepository userRepository;
 
-    @Autowired
-    private UserService userService;
+    @InjectMocks
+    private UserServiceImpl userService;
 
     @Test
     void create_ShouldReturnCreatedUser() {
@@ -42,7 +45,7 @@ class UserServiceImplTest {
 
     @Test
     void getById_UserNotFound_ShouldThrowException() {
-        when(userRepository.findById(999L)).thenReturn(null);
+        when(userRepository.findById(999L)).thenReturn(Optional.empty());
 
         NotFoundException exception = assertThrows(NotFoundException.class,
                 () -> userService.getById(999L));

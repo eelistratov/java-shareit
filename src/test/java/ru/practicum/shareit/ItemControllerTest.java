@@ -16,6 +16,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import ru.practicum.shareit.item.dto.CommentRequestDto;
+import ru.practicum.shareit.item.dto.CommentResponseDto;
+import java.time.LocalDateTime;
+
 @WebMvcTest(ItemController.class)
 class ItemControllerTest {
 
@@ -43,5 +47,21 @@ class ItemControllerTest {
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.name").value("Дрель Салют"))
                 .andExpect(jsonPath("$.available").value(true));
+    }
+
+    @Test
+    void addComment_ShouldReturnCreatedComment() throws Exception {
+        CommentRequestDto request = new CommentRequestDto("Отличная вещь!");
+        CommentResponseDto response = new CommentResponseDto(1L, "Отличная вещь!", "Иван", LocalDateTime.now());
+
+        when(itemService.addComment(eq(1L), eq(1L), any(CommentRequestDto.class))).thenReturn(response);
+
+        mockMvc.perform(post("/items/1/comment")
+                        .header("X-Sharer-User-Id", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.text").value("Отличная вещь!"));
     }
 }
