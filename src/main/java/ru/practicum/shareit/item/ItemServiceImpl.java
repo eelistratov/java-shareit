@@ -12,7 +12,7 @@ import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemWithBookingsDto;
 import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.user.User;
+import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.UserRepository;
 
 import java.time.LocalDateTime;
@@ -117,7 +117,6 @@ public class ItemServiceImpl implements ItemService {
                 .orElseThrow(() -> new NotFoundException("Вещь с id " + itemId + " не найдена"));
 
         ItemWithBookingsDto dto = mapToItemWithBookingsDto(item);
-        addBookingsToDto(item, dto);
         addCommentsToDto(item, dto);
         return dto;
     }
@@ -133,7 +132,6 @@ public class ItemServiceImpl implements ItemService {
         return items.stream()
                 .map(item -> {
                     ItemWithBookingsDto dto = mapToItemWithBookingsDto(item);
-                    addBookingsToDto(item, dto);
                     addCommentsToDto(item, dto);
                     return dto;
                 })
@@ -151,11 +149,6 @@ public class ItemServiceImpl implements ItemService {
         dto.setOwner(item.getOwner());
         dto.setRequest(item.getRequest());
         return dto;
-    }
-
-    private void addBookingsToDto(Item item, ItemWithBookingsDto dto) {
-        // Метод оставлен пустым для упрощения
-        // lastBooking и nextBooking не добавляются
     }
 
     private void addCommentsToDto(Item item, ItemWithBookingsDto dto) {
