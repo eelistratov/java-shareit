@@ -1,21 +1,20 @@
 package ru.practicum.shareit.user;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.BadRequestException;
 import ru.practicum.shareit.exception.ConflictException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.user.dto.UserDto;
+import ru.practicum.shareit.user.model.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Override
     public UserDto create(UserDto userDto) {
@@ -32,10 +31,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getById(Long id) {
-        User user = userRepository.findById(id);
-        if (user == null) {
-            throw new NotFoundException("Пользователь с id " + id + " не найден");
-        }
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Пользователь с id " + id + " не найден"));
         return UserMapper.toUserDto(user);
     }
 
@@ -48,10 +45,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto update(Long id, UserDto userDto) {
-        User existingUser = userRepository.findById(id);
-        if (existingUser == null) {
-            throw new NotFoundException("Пользователь с id " + id + " не найден");
-        }
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Пользователь с id " + id + " не найден"));
 
         if (userDto.getEmail() != null && !userDto.getEmail().equals(existingUser.getEmail())) {
             if (userRepository.existsByEmailAndIdNot(userDto.getEmail(), id)) {
@@ -64,7 +59,7 @@ public class UserServiceImpl implements UserService {
             existingUser.setName(userDto.getName());
         }
 
-        User updatedUser = userRepository.update(existingUser);
+        User updatedUser = userRepository.save(existingUser);
         return UserMapper.toUserDto(updatedUser);
     }
 
