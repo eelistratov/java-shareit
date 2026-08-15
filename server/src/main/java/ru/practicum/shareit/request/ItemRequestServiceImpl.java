@@ -4,12 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.ItemRepository;
+import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.request.dto.ItemRequestCreateDto;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,8 +42,8 @@ public class ItemRequestServiceImpl implements ItemRequestService {
 
         return requests.stream()
                 .map(request -> {
-                    List<ru.practicum.shareit.item.model.Item> items = itemRepository.findByRequestId(request.getId());
-                    return ItemRequestMapper.toItemRequestDto(request, items);
+                    List<Item> items = itemRepository.findByRequestId(request.getId());
+                    return ItemRequestMapper.toItemRequestDto(request, items != null ? items : new ArrayList<>());
                 })
                 .collect(Collectors.toList());
     }
@@ -56,8 +58,8 @@ public class ItemRequestServiceImpl implements ItemRequestService {
 
         return requests.stream()
                 .map(request -> {
-                    List<ru.practicum.shareit.item.model.Item> items = itemRepository.findByRequestId(request.getId());
-                    return ItemRequestMapper.toItemRequestDto(request, items);
+                    List<Item> items = itemRepository.findByRequestId(request.getId());
+                    return ItemRequestMapper.toItemRequestDto(request, items != null ? items : new ArrayList<>());
                 })
                 .collect(Collectors.toList());
     }
@@ -71,7 +73,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
         ItemRequest request = requestRepository.findById(requestId)
                 .orElseThrow(() -> new NotFoundException("Запрос с id " + requestId + " не найден"));
 
-        List<ru.practicum.shareit.item.model.Item> items = itemRepository.findByRequestId(request.getId());
-        return ItemRequestMapper.toItemRequestDto(request, items);
+        List<Item> items = itemRepository.findByRequestId(request.getId());
+        return ItemRequestMapper.toItemRequestDto(request, items != null ? items : new ArrayList<>());
     }
 }

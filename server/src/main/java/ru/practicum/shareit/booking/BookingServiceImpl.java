@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.dto.BookingRequestDto;
 import ru.practicum.shareit.booking.dto.BookingResponseDto;
 import ru.practicum.shareit.exception.BadRequestException;
-import ru.practicum.shareit.exception.ForbiddenException;  // ← ДОБАВИТЬ ЭТОТ ИМПОРТ!
+import ru.practicum.shareit.exception.ForbiddenException;
 import ru.practicum.shareit.exception.NotAvailableException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.ItemRepository;

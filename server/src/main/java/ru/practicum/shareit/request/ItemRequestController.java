@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.request.dto.ItemRequestCreateDto;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -33,6 +34,10 @@ public class ItemRequestController {
     @GetMapping("/{requestId}")
     public ItemRequestDto getRequestById(@RequestHeader("X-Sharer-User-Id") Long userId,
                                          @PathVariable Long requestId) {
-        return requestService.getRequestById(userId, requestId);
+        ItemRequestDto dto = requestService.getRequestById(userId, requestId);
+        if (dto.getItems() == null) {
+            dto.setItems(new ArrayList<>());
+        }
+        return dto;
     }
 }
