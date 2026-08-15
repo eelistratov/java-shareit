@@ -22,6 +22,7 @@
         <java.version>21</java.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
+        <lombok.version>1.18.34</lombok.version>
     </properties>
 
     <modules>
@@ -54,7 +55,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.34</version>
+                <version>${lombok.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.postgresql</groupId>
@@ -95,8 +96,17 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.13.0</version>
                     <configuration>
-                        <source>21</source>
-                        <target>21</target>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <!-- ↓↓↓ ДОБАВЛЯЕМ ЭТУ СЕКЦИЮ ↓↓↓ -->
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                        <!-- ↑↑↑ ДОБАВЛЯЕМ ЭТУ СЕКЦИЮ ↑↑↑ -->
                     </configuration>
                 </plugin>
                 <plugin>

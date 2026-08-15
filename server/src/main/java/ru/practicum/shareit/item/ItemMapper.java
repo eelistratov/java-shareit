@@ -9,27 +9,29 @@ public class ItemMapper {
         if (item == null) {
             return null;
         }
-        return new ItemDto(
-                item.getId(),
-                item.getName(),
-                item.getDescription(),
-                item.getAvailable(),
-                item.getOwner(),
-                item.getRequest()
-        );
+        ItemDto dto = new ItemDto();
+        dto.setId(item.getId());
+        dto.setName(item.getName());
+        dto.setDescription(item.getDescription());
+        dto.setAvailable(item.getAvailable());
+        dto.setOwner(item.getOwner());
+        if (item.getRequest() != null) {
+            dto.setRequest(item.getRequest().getId());
+        }
+        return dto;
     }
 
     public static Item toItem(ItemDto itemDto) {
         if (itemDto == null) {
             return null;
         }
-        return new Item(
-                itemDto.getId(),
-                itemDto.getName(),
-                itemDto.getDescription(),
-                itemDto.getAvailable(),
-                itemDto.getOwner(),
-                itemDto.getRequest()
-        );
+        Item item = new Item();
+        item.setId(itemDto.getId());
+        item.setName(itemDto.getName());
+        item.setDescription(itemDto.getDescription());
+        item.setAvailable(itemDto.getAvailable());
+        item.setOwner(itemDto.getOwner());
+        item.setRequest(null);
+        return item;
     }
 }

@@ -9,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.shareit.user.UserController;
 import ru.practicum.shareit.user.UserService;
-import ru.practicum.shareit.user.dto.UserDto;  // ← ДОБАВИТЬ ИМПОРТ!
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

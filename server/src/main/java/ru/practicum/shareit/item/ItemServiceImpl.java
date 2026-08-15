@@ -147,7 +147,7 @@ public class ItemServiceImpl implements ItemService {
         dto.setDescription(item.getDescription());
         dto.setAvailable(item.getAvailable());
         dto.setOwner(item.getOwner());
-        dto.setRequest(item.getRequest());
+        dto.setRequest(item.getRequest() != null ? item.getRequest().getId() : null);
         return dto;
     }
 
