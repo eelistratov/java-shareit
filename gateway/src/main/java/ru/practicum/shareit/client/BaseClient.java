@@ -3,6 +3,7 @@ package ru.practicum.shareit.client;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,12 +71,14 @@ public class BaseClient {
     ) {
         HttpEntity<T> requestEntity = new HttpEntity<>(body, defaultHeaders(userId));
 
+        Map<String, Object> params = parameters != null ? parameters : new HashMap<>();
+
         ResponseEntity<String> response = rest.exchange(
                 path,
                 method,
                 requestEntity,
                 String.class,
-                parameters
+                params
         );
 
         return response;
