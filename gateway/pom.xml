@@ -49,10 +49,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- ↓↓↓ ДОБАВИТЬ ДЛЯ PATCH ↓↓↓ -->
         <dependency>
             <groupId>org.apache.httpcomponents.client5</groupId>
             <artifactId>httpclient5</artifactId>
         </dependency>
+        <!-- ↑↑↑ ДОБАВИТЬ ДЛЯ PATCH ↑↑↑ -->
     </dependencies>
 
     <build>

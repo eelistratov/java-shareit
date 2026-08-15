@@ -1,5 +1,6 @@
 package ru.practicum.shareit.item;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.*;
@@ -14,14 +15,14 @@ public class ItemController {
 
     @PostMapping
     public ItemDto create(@RequestHeader(value = "X-Sharer-User-Id", required = true) Long userId,
-                          @RequestBody ItemDto itemDto) {  // ← убрали @Valid
+                          @Valid @RequestBody ItemDto itemDto) {
         return itemService.create(userId, itemDto);
     }
 
     @PatchMapping("/{itemId}")
     public ItemDto update(@RequestHeader(value = "X-Sharer-User-Id", required = true) Long userId,
                           @PathVariable Long itemId,
-                          @RequestBody ItemDto itemDto) {  // ← убрали @Valid
+                          @Valid @RequestBody ItemDto itemDto) {
         return itemService.update(userId, itemId, itemDto);
     }
 
@@ -43,7 +44,7 @@ public class ItemController {
     @PostMapping("/{itemId}/comment")
     public CommentResponseDto addComment(@RequestHeader(value = "X-Sharer-User-Id", required = true) Long userId,
                                          @PathVariable Long itemId,
-                                         @RequestBody CommentRequestDto commentRequestDto) {  // ← убрали @Valid
+                                         @Valid @RequestBody CommentRequestDto commentRequestDto) {
         return itemService.addComment(userId, itemId, commentRequestDto);
     }
 }
