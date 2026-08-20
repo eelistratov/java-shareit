@@ -1,12 +1,10 @@
 package ru.practicum.shareit.request;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.request.dto.ItemRequestCreateDto;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,7 +15,7 @@ public class ItemRequestController {
 
     @PostMapping
     public ItemRequestDto create(@RequestHeader("X-Sharer-User-Id") Long userId,
-                                 @Valid @RequestBody ItemRequestCreateDto createDto) {
+                                 @RequestBody ItemRequestCreateDto createDto) {  // ← убрали @Valid
         return requestService.create(userId, createDto);
     }
 
@@ -34,10 +32,6 @@ public class ItemRequestController {
     @GetMapping("/{requestId}")
     public ItemRequestDto getRequestById(@RequestHeader("X-Sharer-User-Id") Long userId,
                                          @PathVariable Long requestId) {
-        ItemRequestDto dto = requestService.getRequestById(userId, requestId);
-        if (dto.getItems() == null) {
-            dto.setItems(new ArrayList<>());
-        }
-        return dto;
+        return requestService.getRequestById(userId, requestId);
     }
 }
