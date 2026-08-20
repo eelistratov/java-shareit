@@ -53,4 +53,5 @@ public class ErrorHandler {
         log.error("500 Internal Server Error", e);
         return new ErrorResponse("Произошла непредвиденная ошибка: " + e.getMessage());
     }
+
 }
