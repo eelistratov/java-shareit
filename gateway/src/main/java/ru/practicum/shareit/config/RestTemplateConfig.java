@@ -12,18 +12,14 @@ public class RestTemplateConfig {
 
     @Bean
     public RestTemplate restTemplate() {
-        HttpClient httpClient = HttpClients.createDefault();
-        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory(httpClient);
-        RestTemplate restTemplate = new RestTemplate(factory);
-
+        RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(new org.springframework.web.client.DefaultResponseErrorHandler() {
             @Override
-            public boolean hasError(org.springframework.http.client.ClientHttpResponse response) throws java.io.IOException {
-                // Возвращаем false, чтобы НЕ бросать исключения
+            public boolean hasError(org.springframework.http.client.ClientHttpResponse response)
+                    throws java.io.IOException {
                 return false;
             }
         });
-
         return restTemplate;
     }
 }
