@@ -14,14 +14,14 @@ public class ItemController {
 
     @PostMapping
     public ItemDto create(@RequestHeader(value = "X-Sharer-User-Id", required = true) Long userId,
-                          @RequestBody ItemDto itemDto) {  // ← убрали @Valid
+                          @RequestBody ItemDto itemDto) {
         return itemService.create(userId, itemDto);
     }
 
     @PatchMapping("/{itemId}")
     public ItemDto update(@RequestHeader(value = "X-Sharer-User-Id", required = true) Long userId,
                           @PathVariable Long itemId,
-                          @RequestBody ItemDto itemDto) {  // ← убрали @Valid
+                          @RequestBody ItemDto itemDto) {
         return itemService.update(userId, itemId, itemDto);
     }
 

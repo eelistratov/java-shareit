@@ -15,7 +15,7 @@ public class BookingController {
 
     @PostMapping
     public BookingResponseDto create(@RequestHeader("X-Sharer-User-Id") Long userId,
-                                     @RequestBody BookingRequestDto bookingRequestDto) {  // ← убрали @Valid
+                                     @RequestBody BookingRequestDto bookingRequestDto) {
         return bookingService.create(userId, bookingRequestDto);
     }
 

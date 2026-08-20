@@ -23,12 +23,12 @@ public class UserController {
     }
 
     @PostMapping
-    public UserDto create(@RequestBody UserDto userDto) {  // ← убрали @Valid
+    public UserDto create(@RequestBody UserDto userDto) {
         return userService.create(userDto);
     }
 
     @PatchMapping("/{id}")
-    public UserDto update(@PathVariable Long id, @RequestBody UserDto userDto) {  // ← убрали @Valid
+    public UserDto update(@PathVariable Long id, @RequestBody UserDto userDto) {
         return userService.update(id, userDto);
     }
 

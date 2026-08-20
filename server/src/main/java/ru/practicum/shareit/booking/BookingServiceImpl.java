@@ -14,7 +14,9 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.UserRepository;
 
+
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,7 +55,7 @@ public class BookingServiceImpl implements BookingService {
             throw new BadRequestException("Дата начала не может совпадать с датой окончания");
         }
 
-        if (bookingRequestDto.getStart().isBefore(LocalDateTime.now())) {
+        if (bookingRequestDto.getStart().toLocalDate().isBefore(LocalDate.now())) {
             throw new BadRequestException("Дата начала не может быть в прошлом");
         }
 

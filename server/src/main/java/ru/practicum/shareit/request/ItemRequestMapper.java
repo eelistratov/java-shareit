@@ -25,6 +25,7 @@ public class ItemRequestMapper {
     public static ItemRequestDto toItemRequestDto(ItemRequest request, List<Item> items) {
         ItemRequestDto dto = new ItemRequestDto();
         dto.setId(request.getId());
+        dto.setName("Запрос #" + request.getId());
         dto.setDescription(request.getDescription());
         dto.setCreated(request.getCreated());
 
